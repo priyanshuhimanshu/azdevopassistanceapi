@@ -1,0 +1,12 @@
+# Azure DevOps Support & Incident AI Assistant - backend
+# Python 3.13
+fastapi>=0.142
+uvicorn[standard]>=0.54
+pydantic>=2.13
+pydantic-settings>=2.12
+pyyaml>=6.0
+httpx>=0.28
+python-dotenv>=1.1
+fastmcp>=4.0
+pytest>=9.0
+pytest-asyncio>=1.0

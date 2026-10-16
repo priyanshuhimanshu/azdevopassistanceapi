@@ -1,0 +1,87 @@
+# ---------------------------------------------------------------------------
+# Azure DevOps work-item mapping for the Support & Incident AI Assistant.
+#
+# Different organizations use different process templates (Agile, Scrum,
+# CMMI, or fully customized). Nothing here is hard-coded in the application:
+# inspect the project first, then adapt this file.
+# ---------------------------------------------------------------------------
+
+# Work-item types that represent support incidents / issues in THIS project.
+# Inspect with:  GET {org}/{project}/_apis/wit/workitemtypes
+incident_types:
+  - Incident
+  - Issue
+  - Bug
+  - Support Request
+  - Problem
+
+# Types excluded from support reporting even if they appear in queries.
+excluded_types:
+  - Task
+  - Test Case
+  - Feature
+  - Epic
+  - User Story
+
+# Field reference names (classic) -> logical attributes.
+# Missing fields are tolerated: the agent reports "not available" instead of
+# inventing values.
+fields:
+  id: "System.Id"
+  title: "System.Title"
+  description: "System.Description"
+  work_item_type: "System.WorkItemType"
+  state: "System.State"
+  reason: "System.Reason"
+  priority: "System.Priority"
+  severity: "Custom.Severity"
+  assigned_to: "System.AssignedTo"
+  created_date: "System.CreatedDate"
+  changed_date: "System.ChangedDate"
+  resolved_date: "Microsoft.VS.Common.TFSResolvedDate"
+  closed_date: "System.ClosedDate"
+  area_path: "System.AreaPath"
+  iteration_path: "System.IterationPath"
+  tags: "System.Tags"
+  customer: "Custom.Customer"
+  environment: "Custom.Environment"
+  impact: "Custom.Impact"
+  urgency: "Custom.Urgency"
+  sla_due_date: "Custom.SLADueDate"
+  sla_target_hours: "Custom.SLATargetHours"
+  due_date: "System.DueDate"
+  resolution: "System.Resolution"
+  root_cause: "Custom.RootCause"
+
+# States treated as "open" for reporting (everything else counts as resolved).
+# Aligned with the live project states observed in Azure DevOps:
+# New, Triage, In Progress, Testing, UAT, On Hold (plus generic fallbacks).
+open_states:
+  - New
+  - Triage
+  - Active
+  - Investigating
+  - In Progress
+  - Testing
+  - UAT
+  - Waiting
+  - Blocked
+  - On Hold
+  - Resolved  # overridden at runtime by resolved/closed date checks
+
+resolved_states:
+  - Resolved
+  - Closed
+  - Done
+  - Removed
+
+# Severity / priority normalization (raw value -> canonical label)
+severity_values:
+  "1": Critical
+  "2": High
+  "3": Medium
+  "4": Low
+  critical: Critical
+  high: High
+  medium: Medium
+  low: Low
